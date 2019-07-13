@@ -6,6 +6,7 @@
 # Logging init #
 ################
 import json
+from db_funcs import init_db 
 from logging.config import dictConfig
 
 with open('logging.json', 'r') as f:
@@ -277,6 +278,9 @@ if __name__ == '__main__':
 
     # tx_p = Process(target=tx_db_worker, args=(config['DB_PATH'], config['RPC_SERVER'], config['MINT_ACCOUNT']))
     # tx_p.start()
+
+    c, conn = connect_to_db(config['DB_PATH'])  # returns cursor object
+    init_db(c)
 
     start_rpc_client_instance(config['RPC_SERVER'], config['MINT_ACCOUNT'])
 
