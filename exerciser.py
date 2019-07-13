@@ -22,7 +22,6 @@ from time import sleep
 from multiprocessing import Process
 
 from rpc_client import get_acct_raw, get_acct_info, start_rpc_client_instance
-from client import start_client_instance, do_cmd
 from db_funcs import connect_to_db, get_latest_version, get_tx_from_db_by_version, get_all_account_tx, tx_db_worker
 from stats import calc_stats
 
@@ -276,8 +275,8 @@ if __name__ == '__main__':
 
     app.logger.info("system configuration: {}".format(json.dumps(config, indent=4)))
 
-    tx_p = Process(target=tx_db_worker, args=(config['DB_PATH'], config['RPC_SERVER'], config['MINT_ACCOUNT']))
-    tx_p.start()
+    # tx_p = Process(target=tx_db_worker, args=(config['DB_PATH'], config['RPC_SERVER'], config['MINT_ACCOUNT']))
+    # tx_p.start()
 
     start_rpc_client_instance(config['RPC_SERVER'], config['MINT_ACCOUNT'])
 
