@@ -223,37 +223,37 @@ def stats():
     return ret
 
 
-@app.route('/faucet', methods=['GET', 'POST'])
-def faucet():
-    update_counters()
+# @app.route('/faucet', methods=['GET', 'POST'])
+# def faucet():
+#     update_counters()
 
-    c2, conn = connect_to_db(config['DB_PATH'])
-    bver = str(get_latest_version(c2))
+#     c2, conn = connect_to_db(config['DB_PATH'])
+#     bver = str(get_latest_version(c2))
 
-    message = ''
-    if request.method == 'POST':
-        try:
-            acct = request.form.get('acct')
-            app.logger.info('acct: {}'.format(acct))
-            amount = request.form.get('amount')
-            app.logger.info('amount: {}'.format(amount))
-            if float(amount) < 0:
-                message = 'Amount must be >= 0'
-            elif not is_valid_account(acct):
-                message = 'Invalid account format'
-            else:
-                do_cmd('a mb 0 ' + str(float(amount)), p = p)
-                do_cmd('tb 0 ' + acct + ' ' + str(float(amount)), p = p)
-                acct_link = '<a href="/account/{0}">{0}</a>'.format(acct)
-                message = 'Sent ' + amount + ' <small>Libra</small> to ' + acct_link
-        except:
-            message = 'Invalid request logged!'
-            app.logger.exception(message)
+#     message = ''
+#     if request.method == 'POST':
+#         try:
+#             acct = request.form.get('acct')
+#             app.logger.info('acct: {}'.format(acct))
+#             amount = request.form.get('amount')
+#             app.logger.info('amount: {}'.format(amount))
+#             if float(amount) < 0:
+#                 message = 'Amount must be >= 0'
+#             elif not is_valid_account(acct):
+#                 message = 'Invalid account format'
+#             else:
+#                 do_cmd('a mb 0 ' + str(float(amount)), p = p)
+#                 do_cmd('tb 0 ' + acct + ' ' + str(float(amount)), p = p)
+#                 acct_link = '<a href="/account/{0}">{0}</a>'.format(acct)
+#                 message = 'Sent ' + amount + ' <small>Libra</small> to ' + acct_link
+#         except:
+#             message = 'Invalid request logged!'
+#             app.logger.exception(message)
 
-        if message:
-            message = faucet_alert_template.format(message)
+#         if message:
+#             message = faucet_alert_template.format(message)
 
-    return faucet_template.format(bver, message)
+#     return faucet_template.format(bver, message)
 
 
 @app.route('/assets/<path:path>')
@@ -281,7 +281,7 @@ if __name__ == '__main__':
 
     start_rpc_client_instance(config['RPC_SERVER'], config['MINT_ACCOUNT'])
 
-    p = start_client_instance(config['CLIENT_PATH'], config['ACCOUNT_FILE'])
+    # p = start_client_instance(config['CLIENT_PATH'], config['ACCOUNT_FILE'])
 
     sleep(1)
 
